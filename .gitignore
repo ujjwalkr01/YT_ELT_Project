@@ -1,6 +1,7 @@
 .env
 __pycache__/
 venv/
+logs/
 
 ##to activat the virtual environment run the following command in the terminal
 # source venv/Scripts/activate
