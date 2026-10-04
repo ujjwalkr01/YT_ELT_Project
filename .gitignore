@@ -6,12 +6,22 @@ logs/
 ##to activat the virtual environment run the following command in the terminal
 # source venv/Scripts/activate
 -------------------------------------------------------------------------------
+#--Cron expression for scheduling the DAG
+0  14  *  *  *
+│  │   │  │  │
+│  │   │  │  └── Day of week: any
+│  │   │  └───── Month: any
+│  │   └──────── Day of month: any
+│  └──────────── Hour: 14
+└─────────────── Minute: 0
+-------------------------------------------------------------------------------
 #--Docker commands
 
 #To start the docker container- docker compose up -d
 #To stop the docker container- docker compose down
 #To check the status of the docker container- docker compose ps
 #To check the logs of the docker container- docker compose logs -f
+#To open an interactive Bash terminal inside the airflow-worker container- docker exec -it <container_name> bash
 
 --------------------------------------------------------------------------------
 #--Airflow commands 
