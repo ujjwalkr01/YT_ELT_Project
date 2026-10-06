@@ -52,7 +52,7 @@ def create_table(schema):
                           "Duration" varchar(20) not null,
                           "Video_Views" int,
                           "Likes_Count" int,
-                          "Comments_Count" int,                          
+                          "Comments_Count" int                       
                           );
                      """
     else:
@@ -65,7 +65,7 @@ def create_table(schema):
                                    "Video_Type" varchar(10) not null,
                                    "Video_Views" int,
                                    "Likes_Count" int,
-                                   "Comments_Count" int,                          
+                                   "Comments_Count" int                          
                                    );
                        """   
     cur.execute(table_sql)

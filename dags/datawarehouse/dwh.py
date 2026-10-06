@@ -6,15 +6,15 @@ from datawarehouse.data_transformation import transform_data
 import logging
 from airflow.decorators import task
 
-logger=logging_getLogger(__name__)
+logger=logging.getLogger(__name__)
 table="yt_api"
 
 @task
-def staging_table():
+def staging_table(): #staging_table() prepares the raw data
     
     schema= 'staging'
     
-    conn,curr= None,None
+    conn,cur= None,None
     
     try:
         conn,cur=get_conn_cursor()
@@ -54,7 +54,7 @@ def staging_table():
             close_conn_cursor(conn,cur)
             
 @task
-def core_table():
+def core_table(): #core_table() takes staging data, transforms it, and synchronizes the core table.
     
     schema= 'core'
     
@@ -73,6 +73,7 @@ def core_table():
         cur.execute(f"Select * from staging.{table};")
         rows=cur.fetchall()
         
+           
         for row in rows:
             
             current_video_ids.add(row["Video_ID"])
