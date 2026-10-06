@@ -24,6 +24,16 @@ logs/
 #To open an interactive Bash terminal inside the airflow-worker container- docker exec -it <container_name> bash
 
 --------------------------------------------------------------------------------
+
+#Creating a connection to database using airflow:
+
+# Hook = helps Airflow connect to PostgreSQL
+# Connection = establishes the database connection
+# Cursor = executes SQL
+# RealDictCursor = returns query results as dictionaries
+# Close = releases the database resources
+
+--------------------------------------------------------------------------------
 #--Airflow commands 
 
 # Miscellaneous commands                                                                               
