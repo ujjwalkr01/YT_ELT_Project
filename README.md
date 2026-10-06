@@ -1,54 +1,67 @@
-﻿# YT_ELT_Project
+# YT_ELT_Project
 
+## 📌 Summary
 
- Summary
-This ELT project uses Airflow as an orchestration tool, packaged inside docker containers. The steps that make up the project are as follows:
+This ELT project uses **Apache Airflow** as an orchestration tool, packaged inside Docker containers.
 
-Data is extracted using the Youtube API with Python scripts
-The data is initially loaded into a staging schema which is a dockerized PostgreSQL database
-From there, a python script is used for minor data transformations where the data is then loaded into the core schema (also a dockerized PostgreSQL database)
-The first (initial) API pull loads the data - this is the initial full upload. Successive pulls upserts the values for certain variables (columns). Once the core schema is populated and both unit and data quality tests have been implemented, the data is then ready for analysis.
+The steps that make up the project are:
 
-The following seven variables are extracted from the API:
+1. Data is extracted using the **YouTube API** with Python scripts.
+2. The data is initially loaded into a **staging schema** in a Dockerized PostgreSQL database.
+3. A Python script performs minor data transformations.
+4. The transformed data is then loaded into the **core schema**, also hosted in the Dockerized PostgreSQL database.
+5. The first API pull performs the initial full upload.
+6. Successive API pulls **upsert** the values for certain variables (columns).
+7. Once the core schema is populated and both unit and data quality tests have been implemented, the data is ready for analysis.
 
-Video ID,
-Video Title,
-Upload Date,
-Duration,
-Video Views,
-Likes Count,
-Comments Count
-Tools & Technologies
-Containerization - Docker, Docker-Compose
-Orchestration - Airflow
-Data Storage - Postgres
-Languages - Python, SQL
-CI-CD - Github Actions
-Containerization
-To deploy Airflow on Docker, the official docker-compose.yaml file is used with some changes:
+---
 
-The image used is an extended image, built using a Dockerfile. This image is pulled/pushed from/to to Docker Hub using the Github Actions CI-CD workflow yaml file. Once the image is created, the docker-compose yaml file can be executed to run the multiple containers - This is also done in the CI-CD workflow.
+## 📊 Data Extracted
 
-Database Connection and Variables are specified as environment variables.
+The following seven variables are extracted from the YouTube API:
 
-The Connection is given in a URI format and has the following naming convention: AIRFLOW_CONN_{CONN_ID}
+| Variable | Description |
+|---|---|
+| Video ID | Unique identifier of the video |
+| Video Title | Title of the video |
+| Upload Date | Date the video was uploaded |
+| Duration | Duration of the video |
+| Video Views | Number of views |
+| Likes Count | Number of likes |
+| Comments Count | Number of comments |
 
-while the Variables are specified as such: AIRFLOW_VAR_{VARIABLE_NAME}
+---
 
-A Fernet key is used to encrypt passwords in the connection and variable configuration.
-Orchestration
-Three DAGs exist, triggered one after the other. These can be accessed using the Airflow UI through http://localhost:8080. The DAGs are as follows;
+## 🛠️ Tools & Technologies
 
-produce_json - DAG to produce JSON file with raw data
-update_db - DAG to process JSON file and insert data into booth staging and core schemas
-data_quality - DAG to check the data quality on both layers in the database
-Data Storage
-To access the Youtube API data, you can either access the postgres docker container and use psql to interact with the database or access a database management tool like Dbeaver and run your queries from there.
+| Category | Technology |
+|---|---|
+| Containerization | Docker, Docker Compose |
+| Orchestration | Apache Airflow |
+| Data Storage | PostgreSQL |
+| Programming Languages | Python, SQL |
+| CI/CD | GitHub Actions |
+| Data Source | YouTube API |
 
-CI-CD
-The CI-CD part of this project is needed for when you make a change the Airflow code, docker image, packages, etc and want to test that the DAGs are still working as expected. CI-CD is implemented using Github Actions.
+---
 
-License
-This project is proprietary and intended for educational use only. Enrolled students may use this code for personal learning purposes. Redistribution, resale, or public sharing of this code is not permitted. See LICENSE for full details.
+## 🐳 Containerization
 
-The docker-compose.yaml file is derived from the Apache Airflow project and is licensed under the Apache License 2.0. See NOTICE for attribution details.
+To deploy Airflow using Docker, the official `docker-compose.yaml` file is used with some changes.
+
+The image used is an **extended Airflow image**, built using a `Dockerfile`.
+
+The image is pulled from and pushed to **Docker Hub** using the GitHub Actions CI/CD workflow YAML file.
+
+Once the image is created, the `docker-compose.yaml` file can be executed to run the multiple containers. This is also handled through the CI/CD workflow.
+
+Database connections and variables are specified as environment variables.
+
+---
+
+## 🔐 Database Connections & Variables
+
+The Airflow connection is specified using a URI format with the following naming convention:
+
+```text
+AIRFLOW_CONN_{CONN_ID}
